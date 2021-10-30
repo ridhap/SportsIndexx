@@ -1,0 +1,74 @@
+File Used: Ball to Ball IPL data
+Objective: Calculate and assign weights to batsmen/bowlers
+
+Strike Rate, Average are calculated by grouping the table on batsmen and summing the runs and balls.
+
+Runs per ball, balls per wicket are calculated for the bowlers.
+
+A min max scaler is then used to scale the values between 0 to 1.
+
+scaled_value = x-min(x)/max(x)-min(x)
+
+-------------------------------------------------------------------------------------
+
+File Used: Ball to Ball IPL data
+Objective: Calculate scores for 3 ball intervals
+
+
+For Batsmen
+Pivot the table on match player and match ID
+Calculate bins(intervals of 3 ball periods), group the runs for 3 ball intervals and calculate the total runs
+We now have runs for every 3 ball period, for every game, for every batsmen.
+Calculate the average of all 3 ball periods across games.
+Store key, value pair in dictionary where key is player name and value is 3 ball interval values and the number of innings played in the 3 ball periods.
+
+For Bowler
+
+Pivot the table on match player and match ID
+Calculate bins(intervals of 3 ball periods), group the runs for 3 ball intervals and calculate the total runs
+We now have runs for every 3 ball period, for every game, for every bowler.
+Calculate the average of all 3 ball periods across games  
+Store key, value pair in dictionary where key is player name and value is 3 ball interval values.
+
+We calculate the average number of dismissals/wickets for a bowler and store it in a dictionary.
+
+------------------------------------------------------------------------------------
+
+In Game Mechanics - In Progress
+
+
+
+We store 3 ball response from the API in a dataframe and compare the dataframe to our calculated average value.
+
+For Batsmen
+If batsman dismissed
+	Calculate dismissal weight by dividing innings dismissed in ball period with the total innings.
+	Value generated will be from 0 to 1.
+	With batsmen getting out earlier in the evenings having a score closer to 1.
+Else
+	Dismissal weight is 0
+
+Divide actual runs with mean runs and for every 3 ball period, subtract a penalty of 0.85(constant).
+Obtain a sum of all the values and subtract the dismissal weight from the calculated sum.
+
+We now obtain a score(percentage change) for a given batsmen.
+
+For Bowler
+Economy score = actual_runs in 3 ball period divided by mean runs in 3 ball periods and add all the values
+If bowler takes wicket:
+	Divide number of wickets by expected wickets and add it to the economy score
+
+else:
+	Consider the economy score only
+
+
+
+----------------------------------------------------------------------------------
+
+
+
+
+
+
+ 
+
